@@ -1,0 +1,11 @@
+# controller group assumes you are using freebsd for your controller
+[controller]
+127.0.0.1 ansible_connection=local ansible_python_interpreter=/usr/local/bin/python2.7
+
+# define host group to controll, the group name is the key to
+# group_vars yml file ie  if you define a group [web], then in
+# the group_vars it will search and load group_var/web.yml if
+# it exists and set the variables for the host group.
+[your_host_group_definition]
+{ip addr to remote host}
+{ip addr to another host in gorup}
