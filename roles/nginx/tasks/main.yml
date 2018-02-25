@@ -1,0 +1,68 @@
+# Install and configure nginx
+# Create SSL web directory
+# Install certbot to generate LetsEncrypt SSL certificate
+
+---
+- name: Ensure nginx
+  pkgng:
+      name: nginx
+      state: present
+
+- name: Create ssl directory
+  file:
+      path: "{{ fbsd_nginx_ssl_path }}"
+      state: directory
+- name: Initialize test page template
+  template:
+      src: ssl/index.j2
+      dest: "{{ fbsd_nginx_ssl_path }}/index.html" 
+
+- name: Ensure openssl
+  pkgng:
+      name: openssl
+      state: present
+
+# install certbot
+# ref: https://docs.ansible.com/ansible/2.4/openssl_certificate_module.html#examples
+- name: Ensure certbot for letsencrypt ssl
+  pkgng:
+      name: py27-certbot
+      state: present
+
+- name: Ensure dhparam path
+  file:
+      path: /usr/local/etc/ssl
+      state: directory
+
+# FAILED--unsure why
+# ref: http://docs.ansible.com/ansible/devel/modules/openssl_dhparam_module.html
+#- name: Ensure high ssl security
+#  openssl_dhparam:
+#      path: /usr/local/etc/ssl/test-dhparams.pem
+        
+  
+# LetsEncrypt
+# ref: http://docs.ansible.com/ansible/devel/modules/letsencrypt_module.html
+# example: https://github.com/geerlingguy/ansible-role-certbot
+- name: SSL certificate check
+  stat:
+      path: /usr/local/etc/letsencrypt/live/ratanaca.com-0001/cert.pem
+  register: letsencrypt_cert
+  
+# STOP NGINX BEFORE CERBOT CAN GENERATE A CERT
+#- name: Stop nginx
+#  service:
+#      name: nginx
+#      state: stopped
+
+#- name: Ensure Let's Encrypt SSL certificate
+#  shell: certbot 
+#  when not letsencrypt_cert.stat.exists
+
+
+
+# test ssl page 
+# ref: ttps://docs.ansible.com/ansible/latest/playbooks_tests.html#testing-strings
+#- debug: "msg='Ansible managed'"
+#  when:  https://ratanaca.com | search("/index.html")
+  
