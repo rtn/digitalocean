@@ -16,3 +16,83 @@
       dest: "{{ fbsd_timezone_dest }}"
       owner: root
       group: wheel
+
+# install common utilities
+- name: Ensure essential system utiltities
+  pkgng:
+     name: "{{ item.0 }}"
+     state: present
+  with_nested:
+      - "{{ fbsd_common_utils }}"
+ 
+# http://docs.ansible.com/ansible/latest/sysctl_module.html
+# tune some system variables 
+- name: Disable unprivileged user read to message buffer
+  sysctl:
+      name: security.bsd.unprivileged_read_msgbuf
+      value: 0
+      sysctl_set: yes
+
+- name: Disable unprivileged user process 
+  sysctl:
+      name: security.bsd.unprivileged_proc_debug
+      value: 0
+      sysctl_set: yes
+
+# other network tuning -- use with careful consideration, if you don't
+# know what it is for, don't set it and read more about it.
+# ref: https://calomel.org/freebsd_network_tuning.html
+- name: Enable IP forwarding
+  sysctl:
+      name: net.inet.ip.forwarding
+      value: 1
+      sysctl_set: yes
+#- name: Set Hamilton TCP algorithm (default newreno)
+#  sysctl:
+#      name: net.inet.tcp.cc.algorithm
+#      value: htcp
+#      sysctl_set: yes
+
+# TODO: needs to be conditional only whe htcp value is set
+#- name: Set Hamilton TCP congestion control 
+#  sysctl:
+#      name: net.inet.tcp.cc.htcp.rtt_scaling 
+#      value: 1
+#      sysctl_set: yes
+
+- name: Security bsd see other uids
+  sysctl:
+      name: security.bsd.see_other_uids
+      value: 0
+      sysctl_set: yes
+
+- name: Security bsd see other gids 
+  sysctl:
+      name: security.bsd.see_other_gids
+      value: 0
+      sysctl_set: yes
+
+# drop UPD destined for closed sockets
+- name: Drop UDP destenied for closed scokets 
+  sysctl:
+      name: net.inet.udp.blackhole
+      value: 1
+      sysctl_set: yes
+
+- name: Drop TCP destenied for closed scokets 
+  sysctl:
+      name: net.inet.itcp.blackhole
+      value: 2
+      sysctl_set: yes
+
+- name: Max in IPv4 network queue size 
+  sysctl:
+      name: net.inet.ip.intr_queue_maxlen
+      value: 2048
+      sysctl_set: yes
+- name: Max out IPv4 network queue size 
+  sysctl:
+      name: net.route.netisr_maxqlen 
+      value: 2048
+      sysctl_set: yes
+

@@ -1,0 +1,4 @@
+fbsd_common_utils:
+  - [vim]
+  - [htop]
+  - [iftop]
