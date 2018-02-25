@@ -5,10 +5,11 @@
 # All variables definition in here pertains to the group, unless
 # it is overrided elsewhere.
 
-fbsd_nginx_ssl_path: /www/ssl
 fbsd_timezone: Los_Angeles
 fbsd_timezone_dest: /etc/localtime
 fbsd_timezone_src: /usr/share/zoneinfo/America
+
+fbsd_nginx_ssl_path: /www/ssl
 
 fbsd_php_list:
   - [php-cli]
