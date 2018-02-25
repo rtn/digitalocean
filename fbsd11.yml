@@ -1,5 +1,5 @@
 ---
-- name: RATANACA
+- name: FREEBSD 11.1 OS 
   hosts: fbsd11
   gather_facts: no
   remote_user: freebsd
