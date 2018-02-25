@@ -5,4 +5,14 @@
 - name: Ensure package is up-to-date
   pkgng:
       name: pkg
+      cached: no
+      autoremove: yes
       state: present
+
+# setup local timezone
+- name: Ensure timezone is "{{ fbsd_timezone }}"
+  copy:
+      src: "{{ fbsd_timezone_src }}/{{fbsd_timezone}}"
+      dest: "{{ fbsd_timezone_dest }}"
+      owner: root
+      group: wheel

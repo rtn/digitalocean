@@ -6,3 +6,26 @@
 # it is overrided elsewhere.
 
 fbsd_nginx_ssl_path: /www/ssl
+fbsd_timezone: Los_Angeles
+fbsd_timezone_dest: /etc/localtime
+fbsd_timezone_src: /usr/share/zoneinfo/America
+
+fbsd_php_list:
+  - [php-cli]
+  - [php-common]
+  - [php-fpm]
+  - [php-intl]
+  - [php-json]
+  - [php-ldap]
+  - [php-mbstring]
+  - [php-mcrypt]
+  - [php-mysqlnd]
+  - [php-pecl-geoip]
+  - [php-pecl-json-post]
+  - [php-pecl-memcached]
+  - [php-pecl-redis]
+  - [php-pecl-uuid]
+  - [php-pdo]
+  - [php-soap]
+  - [php-xml]
+  - [php-xmlrpc]
