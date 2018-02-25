@@ -1,0 +1,8 @@
+# This is an example of variable definition for
+# inventory host group do_grp1. As the yml file 
+# suggests, the hosts file must contain the group "[do_grp1]"
+# definition with a list of IPs or hostname under that group.
+# All variables definition in here pertains to the group, unless
+# it is overrided elsewhere.
+
+fbsd_nginx_ssl_path: /www/ssl
