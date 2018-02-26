@@ -1,3 +1,6 @@
+# variables set in one role are available to others
+# so the variables defined here can be used in other roles
+---
 fbsd_common_utils:
   - [vim]
   - [htop]
