@@ -55,17 +55,11 @@
       value: 75000
       sysctl_set: yes
   
-- name: Disable unprivileged user read to message buffer
+- name: Set randompid 
   sysctl:
-      name: security.bsd.unprivileged_read_msgbuf
-      value: 0
-      sysctl_set: yes
-
-- name: Disable unprivileged user process 
-  sysctl:
-      name: security.bsd.unprivileged_proc_debug
-      value: 0
-      sysctl_set: yes
+      name: kern.randompid
+      value: '$(jot -r 1 9999)' 
+      sysctl_set: no 
 
 # other network tuning -- use with careful consideration, if you don't
 # know what it is for, don't set it and read more about it.
@@ -88,6 +82,18 @@
 #      value: 1
 #      sysctl_set: yes
 
+- name: Disable unprivileged user read to message buffer
+  sysctl:
+      name: security.bsd.unprivileged_read_msgbuf
+      value: 0
+      sysctl_set: yes
+
+- name: Disable unprivileged user process 
+  sysctl:
+      name: security.bsd.unprivileged_proc_debug
+      value: 0
+      sysctl_set: yes
+
 - name: Security bsd see other uids
   sysctl:
       name: security.bsd.see_other_uids
@@ -98,6 +104,12 @@
   sysctl:
       name: security.bsd.see_other_gids
       value: 0
+      sysctl_set: yes
+
+- name: Security bsd stack guard page
+  sysctl:
+      name: security.bsd.stack_guard_page
+      value: 1
       sysctl_set: yes
 
 # drop UPD destined for closed sockets
