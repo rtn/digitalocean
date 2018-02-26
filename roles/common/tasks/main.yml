@@ -24,9 +24,34 @@
      state: present
   with_nested:
       - "{{ fbsd_common_utils }}"
- 
+
+############################################################### 
 # http://docs.ansible.com/ansible/latest/sysctl_module.html
 # tune some system variables 
+#
+# 
+###############################################################
+
+# 128 default is too low for robust handling of new connection
+# on heavy loaded web server; raise to 512 or 1024
+# Large value do a better job to avoid DoS attack
+- name: Raise kern.ipc.soacceptqueue
+  sysctl:
+      name: kern.ipc.soacceptqueue
+      value: 1024
+      sysctl_set: yes
+
+# vnode = internal representation of file or dir
+# increase to reduce OS disk I/O
+# free available is a factor to consider when increasing
+# before change vfs.numvnodes=26718, 
+# kern.maxvnodes=63094
+- name: Raise kern.maxvnode
+  sysctl:
+      name: kern.maxvnodes 
+      value: 75000
+      sysctl_set: yes
+  
 - name: Disable unprivileged user read to message buffer
   sysctl:
       name: security.bsd.unprivileged_read_msgbuf
