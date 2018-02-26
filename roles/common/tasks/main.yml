@@ -69,6 +69,7 @@
       name: net.inet.ip.forwarding
       value: 1
       sysctl_set: yes
+
 #- name: Set Hamilton TCP algorithm (default newreno)
 #  sysctl:
 #      name: net.inet.tcp.cc.algorithm
@@ -81,6 +82,13 @@
 #      name: net.inet.tcp.cc.htcp.rtt_scaling 
 #      value: 1
 #      sysctl_set: yes
+
+
+###############################################################
+# Security
+###############################################################
+# TODO:  change ttyv0 and dcons in /etc/ttys from secure to insecure
+#        perhaps this can be done w/perl -pi -e ... 
 
 - name: Disable unprivileged user read to message buffer
   sysctl:
