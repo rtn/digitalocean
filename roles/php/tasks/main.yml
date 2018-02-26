@@ -1,0 +1,10 @@
+#
+#
+#
+---
+- name: Ensure php71
+  pkgng:
+      name: "{{ item.0 }}"
+      state: present
+  with_nested:
+      - "{{ fbsd_php_list }}"
