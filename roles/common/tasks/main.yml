@@ -18,6 +18,9 @@
       group: wheel
 
 # install common utilities
+# the variable freebsd_common_utils is defined in
+# roles/common/vars/main.yml -- this is the main
+# file to define role variables if you wish to add more
 - name: Ensure essential system utiltities
   pkgng:
      name: "{{ item.0 }}"
