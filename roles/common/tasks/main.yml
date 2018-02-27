@@ -38,37 +38,46 @@
 # 128 default is too low for robust handling of new connection
 # on heavy loaded web server; raise to 512 or 1024
 # Large value do a better job to avoid DoS attack
-- name: Raise kern.ipc.soacceptqueue
-  sysctl:
-      name: kern.ipc.soacceptqueue
-      value: 1024
-      sysctl_set: yes
+#- name: Raise kern.ipc.soacceptqueue
+#  sysctl:
+#      name: kern.ipc.soacceptqueue
+#      value: 1024
+#      sysctl_set: yes
 
 # vnode = internal representation of file or dir
 # increase to reduce OS disk I/O
 # free available is a factor to consider when increasing
 # before change vfs.numvnodes=26718, 
 # kern.maxvnodes=63094
-- name: Raise kern.maxvnode
-  sysctl:
-      name: kern.maxvnodes 
-      value: 75000
-      sysctl_set: yes
+#- name: Raise kern.maxvnode
+#  sysctl:
+#      name: kern.maxvnodes 
+#      value: 75000
+#      sysctl_set: yes
   
-- name: Set randompid 
+#- name: Set randompid 
+#  sysctl:
+#      name: kern.randompid
+#      value: '$(jot -r 1 9999)' 
+#      sysctl_set: no 
+
+#- name: Sysctl ensure "{{ item.name }}" is "{{ item.value }}"
+- name: Sysctl ensure optimal value
   sysctl:
-      name: kern.randompid
-      value: '$(jot -r 1 9999)' 
-      sysctl_set: no 
+      name: "{{ item.name }}"
+      value: "{{ item.value }}"
+      sysctl_set: "{{ item.apply }}"
+  with_items:
+      - "{{ fbsd_sysctl_opt }}"
 
 # other network tuning -- use with careful consideration, if you don't
 # know what it is for, don't set it and read more about it.
 # ref: https://calomel.org/freebsd_network_tuning.html
-- name: Enable IP forwarding
-  sysctl:
-      name: net.inet.ip.forwarding
-      value: 1
-      sysctl_set: yes
+#- name: Enable IP forwarding
+#  sysctl:
+#      name: net.inet.ip.forwarding
+#      value: 1
+#      sysctl_set: yes
 
 #- name: Set Hamilton TCP algorithm (default newreno)
 #  sysctl:
@@ -90,57 +99,70 @@
 # TODO:  change ttyv0 and dcons in /etc/ttys from secure to insecure
 #        perhaps this can be done w/perl -pi -e ... 
 
-- name: Disable unprivileged user read to message buffer
-  sysctl:
-      name: security.bsd.unprivileged_read_msgbuf
-      value: 0
-      sysctl_set: yes
+#- name: Disable unprivileged user read to message buffer
+#  sysctl:
+#      name: security.bsd.unprivileged_read_msgbuf
+#      value: 0
+#      sysctl_set: yes
 
-- name: Disable unprivileged user process 
-  sysctl:
-      name: security.bsd.unprivileged_proc_debug
-      value: 0
-      sysctl_set: yes
+#- name: Disable unprivileged user process 
+#  sysctl:
+#      name: security.bsd.unprivileged_proc_debug
+#      value: 0
+#      sysctl_set: yes
 
-- name: Security bsd see other uids
-  sysctl:
-      name: security.bsd.see_other_uids
-      value: 0
-      sysctl_set: yes
+#- name: Security bsd see other uids
+#  sysctl:
+#      name: security.bsd.see_other_uids
+#      value: 0
+#      sysctl_set: yes
 
-- name: Security bsd see other gids 
-  sysctl:
-      name: security.bsd.see_other_gids
-      value: 0
-      sysctl_set: yes
+#- name: Security bsd see other gids 
+#  sysctl:
+#      name: security.bsd.see_other_gids
+#      value: 0
+#      sysctl_set: yes
 
-- name: Security bsd stack guard page
-  sysctl:
-      name: security.bsd.stack_guard_page
-      value: 1
-      sysctl_set: yes
+#- name: Security bsd stack guard page
+#  sysctl:
+#      name: security.bsd.stack_guard_page
+#      value: 1
+#      sysctl_set: yes
 
 # drop UPD destined for closed sockets
-- name: Drop UDP destenied for closed scokets 
-  sysctl:
-      name: net.inet.udp.blackhole
-      value: 1
-      sysctl_set: yes
+#- name: Drop UDP destenied for closed scokets 
+#  sysctl:
+#      name: net.inet.udp.blackhole
+#      value: 1
+#      sysctl_set: yes
 
-- name: Drop TCP destenied for closed scokets 
-  sysctl:
-      name: net.inet.itcp.blackhole
-      value: 2
-      sysctl_set: yes
+#- name: Drop TCP destenied for closed scokets 
+#  sysctl:
+#      name: net.inet.itcp.blackhole
+#      value: 2
+#      sysctl_set: yes
 
-- name: Max in IPv4 network queue size 
-  sysctl:
-      name: net.inet.ip.intr_queue_maxlen
-      value: 2048
-      sysctl_set: yes
-- name: Max out IPv4 network queue size 
-  sysctl:
-      name: net.route.netisr_maxqlen 
-      value: 2048
-      sysctl_set: yes
+#- name: Max in IPv4 network queue size 
+#  sysctl:
+#      name: net.inet.ip.intr_queue_maxlen
+#      value: 2048
+#      sysctl_set: yes
 
+#- name: Max out IPv4 network queue size 
+#  sysctl:
+#      name: net.route.netisr_maxqlen 
+#      value: 2048
+#      sysctl_set: yes
+
+##
+## This may make thing prettier BUT it looses documentation value
+## ** the above is probably more valuable and readable when others
+##    look at this play
+##
+- name: Ensure systctl secruity settings 
+  sysctl:
+      name: "{{ item.key }}"
+      value: "{{ item.value }}"
+      sysctl_set: yes
+  with_items:
+      - "{{ fbsd_sysctl_security }}"

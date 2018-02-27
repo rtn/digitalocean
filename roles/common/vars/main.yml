@@ -5,3 +5,19 @@ fbsd_common_utils:
   - [vim]
   - [htop]
   - [iftop]
+
+fbsd_sysctl_opt:
+  - {name: 'kern.ipc.soacceptqueue', value: '1024',  apply: 'yes'}
+  - {name: 'kern.maxvnodes',         value: '75000', apply: 'yes'}
+  - {name: 'net.inet.ip.forwarding', value: '1',     apply: 'no'}
+
+fbsd_sysctl_security:
+  - {key: security.bsd.unprivileged_read_msgbuf, value: 0,    name: 'Disable unprivileged user read to message buffer'}
+  - {key: security.bsd.unprivileged_proc_debug,  value: 0,    name: 'Disable unprivileged user process'}
+  - {key: security.bsd.see_other_uids,           value: 0,    name: 'Disable user to see other uids'}
+  - {key: security.bsd.see_other_gids,           value: 0,    name: 'Disable user to see other gids'}
+  - {key: security.bsd.stack_guard_page,         value: 1,    name: 'Secure stack guard page'}
+  - {key: net.inet.udp.blackhole,                value: 1,    name: 'Drop UCDP destined for closed sockets'}
+  - {key: net.inet.itcp.blackhole,               value: 2,    name: 'Drop TCP destined for closed sockets'}
+  - {key: net.inet.ip.intr_queue_maxlen,         value: 2048, name: 'Increase IPv4 outgoing network queue size'}
+  - {key: net.route.netisr_maxqlen,              value: 2048, name: 'Increase IPv4 incoming network queue size'}
