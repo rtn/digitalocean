@@ -24,9 +24,9 @@
 # file to define role variables if you wish to add more
 - name: Ensure essential system utiltities
   pkgng:
-     name: "{{ item.0 }}"
+     name: "{{ item.name }}"
      state: present
-  with_nested:
+  with_tems:
       - "{{ fbsd_common_utils }}"
 
 ############################################################### 

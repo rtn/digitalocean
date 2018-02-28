@@ -2,9 +2,9 @@
 # so the variables defined here can be used in other roles
 ---
 fbsd_common_utils:
-  - [vim]
-  - [htop]
-  - [iftop]
+  - {name: vim}
+  - {name: htop}
+  - {name: iftop}
 
 fbsd_sysctl_opt:
   - {name: 'kern.ipc.soacceptqueue', value: '1024',  apply: 'yes'}
