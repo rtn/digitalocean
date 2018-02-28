@@ -1,0 +1,18 @@
+tcp_services = "{ ssh, smtps, domain, www, submission, https }"
+udp_services = "{ domain, dhcps }"
+icmp_types = "{ unreach, echoreq, timex, paramprob }"
+
+set block-policy return
+
+scrub in
+antispoof for lo0
+antispoof for wlan0
+
+block log all
+set skip on lo
+
+pass out proto tcp to any port $tcp_services modulate state
+pass out proto udp to any port $udp_services keep state
+pass out inet proto icmp all icmp-type $icmp_types
+
+pass in on wlan0 proto udp from any port dhcps to any port dhcpc

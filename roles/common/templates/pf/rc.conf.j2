@@ -1,0 +1,19 @@
+# template to copy into /etc/rc.d/pf-rc.conf
+# need to define rules for /etc/pf.conf
+# pfctl -vnf /etc/pf.conf to test rule
+#
+# ref: https://www.vultr.com/docs/how-to-install-blacklistd-on-freebsd-11-1
+
+
+
+# enable packet filter (pf)
+pf_enable="YES"
+pf_rules="/etc/pf.conf"
+pflog_enable="YES"
+pflog_logfile="/var/log/pflog"
+
+# enable blacklistd
+blacklistd_enable="YES"
+blacklistd_flags="-r"
+
+
