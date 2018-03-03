@@ -6,11 +6,24 @@ fbsd_common_utils:
   - {name: htop}
   - {name: iftop}
 
+############################################################### 
+# http://docs.ansible.com/ansible/latest/sysctl_module.html
+# tune some system variables 
+############################################################
 fbsd_sysctl_opt:
-  - {name: 'kern.ipc.soacceptqueue', value: '1024',  apply: 'yes'}
-  - {name: 'kern.maxvnodes',         value: '75000', apply: 'yes'}
-  - {name: 'net.inet.ip.forwarding', value: '1',     apply: 'no'}
+  - {name: kern.ipc.soacceptqueue,            value: 1024,               apply: 'yes'}
+  - {name: kern.maxvnodes,                    value: 75000,              apply: 'yes'}
+  - {name: kern.randompid,                    value: '$(jot -r 1 9999)', apply: 'no'}
+  - {name: net.inet.ip.forwarding,            value: 1,                  apply: 'yes'}
+  - {name: net.inet.tcp.cc.algorithm,         value: 'htcp',             apply: 'yes'}
+  - {name: net.inet.tcp.cc.htcp.rtt_scaling,  value: 1,                  apply: 'yes'}
 
+############################################################### 
+# other network tuning -- use with careful consideration, if you don't
+# know what it is for, don't set it and read more about it.
+# ref: https://calomel.org/freebsd_network_tuning.html
+#- name: Enable IP forwarding
+############################################################### 
 fbsd_sysctl_security:
   - {key: security.bsd.unprivileged_read_msgbuf, value: 0,    name: 'Disable unprivileged user read to message buffer'}
   - {key: security.bsd.unprivileged_proc_debug,  value: 0,    name: 'Disable unprivileged user process'}
