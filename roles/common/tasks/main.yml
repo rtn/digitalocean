@@ -29,6 +29,12 @@
   with_tems:
       - "{{ fbsd_common_utils }}"
 
+###############################################################
+# System optmization
+# TODO: to consoidate sys opt with security or not?
+#       for all practical purpose, it is a sysctl tasks
+###############################################################
+
 - name: Sysctl ensure optimal value
   sysctl:
       name: "{{ item.name }}"
@@ -38,7 +44,7 @@
       - "{{ fbsd_sysctl_opt }}"
 
 ###############################################################
-# Security
+# System Security
 ###############################################################
 # TODO:  change ttyv0 and dcons in /etc/ttys from secure to insecure
 #        perhaps this can be done w/perl -pi -e ... 
