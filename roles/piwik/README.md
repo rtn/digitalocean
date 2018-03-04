@@ -1,12 +1,21 @@
 Role Name
 =========
+Piwik is a web tranfic monitoring and analysis application.  As of 
+January 9, 2018, Piwik is re-branded Matomo (honesty in Japanese). 
+The Matomo role is to ennsure MATOMO is installed from git repository 
+and updated on a regular basis.
 
-A brief description of the role goes here.
+TODO:
+  - checkout, update  Matomo from github
+  - initiate composer and update dependencies -- https://docs.ansible.com/ansible/latest/composer_module.html 
 
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+- web + php + db
+- https://matomo.org/
+- composer 
+
 
 Role Variables
 --------------
@@ -34,5 +43,5 @@ BSD
 
 Author Information
 ------------------
+RL
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).

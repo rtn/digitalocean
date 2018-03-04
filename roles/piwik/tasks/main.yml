@@ -1,2 +1,9 @@
 ---
 # tasks file for piwik
+#
+
+# Clone get the the target path if not esists
+-name: Ensure Matomo (formerly Piwik) github repo is cloned
+ git:
+     repo: "{{ piwik_git_repo }}"
+     dest: "{{ piwik_ssl_path }}"
