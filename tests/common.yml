@@ -1,0 +1,14 @@
+---
+- name: RATANACA
+  hosts: fbsd11
+  gather_facts: no
+  remote_user: freebsd
+  become: true
+  become_method: sudo
+
+  vars:
+    ansible_python_interpreter: "/usr/bin/env python"
+
+  roles:
+      - common
+
