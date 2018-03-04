@@ -26,7 +26,7 @@
   pkgng:
      name: "{{ item.name }}"
      state: present
-  with_tems:
+  with_items:
       - "{{ fbsd_common_utils }}"
 
 ###############################################################

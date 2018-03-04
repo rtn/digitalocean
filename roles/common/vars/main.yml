@@ -1,10 +1,13 @@
 # variables set in one role are available to others
 # so the variables defined here can be used in other roles
+#
+
 ---
 fbsd_common_utils:
   - {name: vim}
   - {name: htop}
   - {name: iftop}
+  - {name: git}
 
 ############################################################### 
 # http://docs.ansible.com/ansible/latest/sysctl_module.html
@@ -15,7 +18,7 @@ fbsd_sysctl_opt:
   - {name: kern.maxvnodes,                    value: 75000,              apply: 'yes'}
   - {name: kern.randompid,                    value: '$(jot -r 1 9999)', apply: 'no'}
   - {name: net.inet.ip.forwarding,            value: 1,                  apply: 'yes'}
-  - {name: net.inet.tcp.cc.algorithm,         value: 'htcp',             apply: 'yes'}
+    #  - {name: net.inet.tcp.cc.algorithm,         value: 'htcp',             apply: 'yes'}
   - {name: net.inet.tcp.cc.htcp.rtt_scaling,  value: 1,                  apply: 'yes'}
 
 ############################################################### 
