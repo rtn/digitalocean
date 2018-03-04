@@ -1,2 +1,6 @@
 ---
 # defaults file for php
+
+# testing var
+fbsd_php_list:
+  - [php71-gd]
