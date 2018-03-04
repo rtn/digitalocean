@@ -1,0 +1,14 @@
+---
+
+- name: TEST PHP ROLE 
+  hosts: fbsd11
+  gather_facts: no
+  remote_user: freebsd
+  become: true
+  become_method: sudo
+
+  roles:
+      - php
+
+
+
