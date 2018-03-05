@@ -1,7 +1,7 @@
 # ANSIBLE FREEBSD EXAMPLE
 **Use At Your Own Risk!**
 
-This is my learning exercise and a work-in-progress sandbox.  Hoever, what is here can be used as an example or sample of how to achive basic play. Most likely you'll have to tweak quite a few things to work for you.
+This is my learning exercise and a work-in-progress sandbox.  However, what is here can be used as an example or sample of how to achive basic play. Most likely you'll have to tweak quite a few things to work for you.
  
 Project is on a FreeBSD controller machine to controll FreeBSD remote host on Digital Ocean.
 
