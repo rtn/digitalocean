@@ -3,7 +3,10 @@
 #
 
 # Clone get the the target path if not esists
--name: Ensure Matomo (formerly Piwik) github repo is cloned
- git:
-     repo: "{{ piwik_git_repo }}"
-     dest: "{{ piwik_ssl_path }}"
+- name: Ensure Matomo (formerly Piwik) github repo is cloned
+  git:
+      remote: "{{ piwik_git_remote_name }}"
+      repo: "{{ piwik_git_repo }}"
+      dest: "{{ piwik_ssl_path }}"
+      #version: "{{ piwik_git_release_version }}"
+

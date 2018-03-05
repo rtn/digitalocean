@@ -1,6 +1,8 @@
 ---
 # defaults file for piwik
 
+piwik_git_remote_name: happy
 piwik_git_repo: https://github.com/matomo-org/matomo.git
+piwik_git_release_version: 3.3.0
 piwik_ssl_path: /www/ssl/pi
 
