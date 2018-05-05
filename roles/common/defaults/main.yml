@@ -1,3 +1,7 @@
 ---
 # defaults file for common
 # notes vars define here can be overwritten
+
+fbsd_timezone: Los_Angeles
+fbsd_timezone_dest: /etc/localtime
+fbsd_timezone_src: /usr/share/zoneinfo/America
