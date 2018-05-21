@@ -56,3 +56,10 @@
       sysctl_set: yes
   with_items:
       - "{{ fbsd_sysctl_security }}"
+
+# enhanced root shell
+- name: Enhance root shell 
+  template:
+      src: shell/root.cshrc.j2
+      dest: /root/.cshrc
+
